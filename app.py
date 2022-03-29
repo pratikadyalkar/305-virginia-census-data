@@ -73,7 +73,7 @@ app.layout = html.Div(children=[
 
 ############ Callbacks
 @app.callback(Output('va-map', 'figure'),
-              Input('state-drop','value'))
+              [Input('state-drop','value')])
 def change_state(sel_state):
     lat = states[(states['state']==sel_state)]['lat'].values[0]
     long = states[(states['state']==sel_state)]['long'].values[0]
