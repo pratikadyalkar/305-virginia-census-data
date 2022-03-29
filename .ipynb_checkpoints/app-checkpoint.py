@@ -12,9 +12,9 @@ with urlopen('https://raw.githubusercontent.com/plotly/datasets/master/geojson-c
 
 ########### Define a few variables ######
 
-tabtitle = 'Virginia Counties'
+tabtitle = 'Census Counties'
 sourceurl = 'https://www.kaggle.com/muonneutrino/us-census-demographic-data'
-githublink = 'https://github.com/austinlasseter/dash-virginia-counties'
+githublink = 'https://github.com/pratikadyalkar/305-virginia-census-data'
 varlist=['TotalPop', 'Men', 'Women', 'Hispanic',
        'White', 'Black', 'Native', 'Asian', 'Pacific', 'VotingAgeCitizen',
        'Income', 'IncomeErr', 'IncomePerCap', 'IncomePerCapErr', 'Poverty',
@@ -45,11 +45,11 @@ app.layout = html.Div(children=[
                     options=[{'label': i, 'value': i} for i in varlist],
                     value='MeanCommute'
                 ),
-        ], className='three columns'),
+        ], className='twelve columns'),
         # right side
         html.Div([
             dcc.Graph(id='va-map')
-        ], className='nine columns'),
+        ], className='twelve columns'),
     ], className='twelve columns'),
 
     # Footer
