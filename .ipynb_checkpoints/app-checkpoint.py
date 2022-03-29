@@ -76,11 +76,12 @@ def change_state(sel_state):
     lat = states[(states['state']==sel_state)]['lat'].values[0]
     long = states[(states['state']==sel_state)]['long'].values[0]
     selectdf =  df.loc[df['State_x']==sel_state]
-    
+    print('a',lat,long,sel_state)
 
 @app.callback(Output('va-map', 'figure'),
               [Input('stats-drop', 'value')])
 def display_results(selected_value):
+    print('b',lat,long,selected_value)
     valmin=selectdf[selected_value].min()
     valmax=selectdf[selected_value].max()
     fig = go.Figure(go.Choroplethmapbox(geojson=counties,
