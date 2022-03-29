@@ -72,7 +72,7 @@ app.layout = html.Div(children=[
 def change_state(sel_state):
     lat = states[(states['state']==sel_state)]['lat'].values[0]
     long = states[(states['state']==sel_state)]['long'].values[0]
-    selectdf =  df.loc[df['State_x']==sel_state]]
+    selectdf =  df.loc[df['State_x']==sel_state]
     
 
 @app.callback(Output('va-map', 'figure'),
