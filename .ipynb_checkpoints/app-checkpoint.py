@@ -75,10 +75,11 @@ app.layout = html.Div(children=[
 @app.callback(Output('va-map', 'figure'),
               [Input('state-drop','value')])
 def change_state(sel_state):
+    print('a',lat,long,sel_state)
     lat = states[(states['state']==sel_state)]['lat'].values[0]
     long = states[(states['state']==sel_state)]['long'].values[0]
     selectdf =  df.loc[df['State_x']==sel_state]
-    print('a',lat,long,sel_state)
+    
 
 @app.callback(Output('va-map', 'figure'),
               [Input('stats-drop', 'value')])
