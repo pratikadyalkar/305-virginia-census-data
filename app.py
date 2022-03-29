@@ -23,7 +23,7 @@ varlist=['TotalPop', 'Men', 'Women', 'Hispanic',
        'WorkAtHome', 'MeanCommute', 'Employed', 'PrivateWork', 'PublicWork',
        'SelfEmployed', 'FamilyWork', 'Unemployment', 'RUCC_2013']
 
-df=pd.read_pickle('resources/va-stats.pkl')
+df=pd.read_pickle('resources/cou-stats.pkl')
 
 ########### Initiate the app
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
@@ -34,7 +34,7 @@ app.title=tabtitle
 ########### Layout
 
 app.layout = html.Div(children=[
-    html.H1('Virginia Census Data 2017'),
+    html.H1('Census Data 2017'),
     # Dropdowns
     html.Div(children=[
         # left side
