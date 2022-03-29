@@ -47,12 +47,15 @@ app.layout = html.Div(children=[
                     options=[{'label': i, 'value': i} for i in states.state],
                     placeholder = 'Select a State'
                 ),
+               
+        ], className='six columns'),
+        html.Div([
                 dcc.Dropdown(
                     id='stats-drop',
                     options=[{'label': i, 'value': i} for i in varlist],
                     placeholder = 'Select a variable'
                 ),
-        ], className='twelve columns'),
+        ], className='six columns'),
         # right side
         html.Div([
             dcc.Graph(id='va-map')
