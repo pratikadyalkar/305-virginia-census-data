@@ -44,7 +44,7 @@ app.layout = html.Div(children=[
                 html.H6('Select census variable:'),
                 dcc.Dropdown(
                     id='state-drop',
-                    options=[{'label': i, 'value': i} for i in states],
+                    options=[{'label': i, 'value': i} for i in states.state],
                     placeholder = 'Select a State'
                 ),
                 dcc.Dropdown(
