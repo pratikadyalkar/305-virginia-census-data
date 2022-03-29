@@ -80,6 +80,7 @@ def change_state(sel_state):
     long = states[(states['state']==sel_state)]['long'].values[0]
     selectdf =  df.loc[df['State_x']==sel_state]
     
+    return 
 
 @app.callback(Output('va-map', 'figure'),
               [Input('stats-drop', 'value')])
