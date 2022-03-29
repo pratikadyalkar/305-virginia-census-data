@@ -15,7 +15,7 @@ with urlopen('https://raw.githubusercontent.com/plotly/datasets/master/geojson-c
 tabtitle = 'Census Counties'
 sourceurl = 'https://www.kaggle.com/muonneutrino/us-census-demographic-data'
 githublink = 'https://github.com/pratikadyalkar/305-virginia-census-data'
-varlist=['TotalPop', 'Men', 'Women', 'Hispanic',
+varlist= ['TotalPop', 'Men', 'Women', 'Hispanic',
        'White', 'Black', 'Native', 'Asian', 'Pacific', 'VotingAgeCitizen',
        'Income', 'IncomeErr', 'IncomePerCap', 'IncomePerCapErr', 'Poverty',
        'ChildPoverty', 'Professional', 'Service', 'Office', 'Construction',
@@ -23,8 +23,10 @@ varlist=['TotalPop', 'Men', 'Women', 'Hispanic',
        'WorkAtHome', 'MeanCommute', 'Employed', 'PrivateWork', 'PublicWork',
        'SelfEmployed', 'FamilyWork', 'Unemployment', 'RUCC_2013']
 
-df=pd.read_pickle('resources/cou-stats.pkl')
-
+df = pd.read_pickle('resources/cou-stats.pkl')
+states = pd.read_csv('resources/states.csv')
+selectdf = pd.DataFrame()
+lat=long=0
 ########### Initiate the app
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
@@ -41,9 +43,14 @@ app.layout = html.Div(children=[
         html.Div([
                 html.H6('Select census variable:'),
                 dcc.Dropdown(
+                    id='state-drop',
+                    options=[{'label': i, 'value': i} for i in states],
+                    placeholder = 'Select a State'
+                ),
+                dcc.Dropdown(
                     id='stats-drop',
                     options=[{'label': i, 'value': i} for i in varlist],
-                    value='MeanCommute'
+                    placeholder = 'Select a variable'
                 ),
         ], className='twelve columns'),
         # right side
@@ -61,22 +68,29 @@ app.layout = html.Div(children=[
 )
 
 ############ Callbacks
+@app.callback(Input('state-drop','value'))
+def change_state(sel_state):
+    lat = states[(states['state']==sel_state)]['lat'].values[0]
+    long = states[(states['state']==sel_state)]['long'].values[0]
+    selectdf =  df.loc[df['State_x']==sel_state]]
+    
+
 @app.callback(Output('va-map', 'figure'),
               [Input('stats-drop', 'value')])
 def display_results(selected_value):
-    valmin=df[selected_value].min()
-    valmax=df[selected_value].max()
+    valmin=selectdf[selected_value].min()
+    valmax=selectdf[selected_value].max()
     fig = go.Figure(go.Choroplethmapbox(geojson=counties,
-                                    locations=df['FIPS'],
-                                    z=df[selected_value],
+                                    locations=selectdf['FIPS'],
+                                    z=selectdf[selected_value],
                                     colorscale='Blues',
-                                    text=df['County'],
+                                    text=selectdf['County'],
                                     zmin=valmin,
                                     zmax=valmax,
                                     marker_line_width=0))
     fig.update_layout(mapbox_style="carto-positron",
                       mapbox_zoom=5.8,
-                      mapbox_center = {"lat": 38.0293, "lon": -79.4428})
+                      mapbox_center = {"lat": lat, "lon": long})
     fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
 
 # https://community.plot.ly/t/what-colorscales-are-available-in-plotly-and-which-are-the-default/2079
