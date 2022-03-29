@@ -40,6 +40,15 @@ app.layout = html.Div(children=[
     # Dropdowns
     html.Div(children=[
         # left side
+        
+        html.Div([
+            html.H6('Select a State:'),
+                dcc.Dropdown(
+                    id='stats-drop',
+                    options=[{'label': i, 'value': i} for i in varlist],
+                    placeholder = 'Select a variable'
+                ),
+        ], className='six columns'),
         html.Div([
                 html.H6('Select census variable:'),
                 dcc.Dropdown(
@@ -48,13 +57,6 @@ app.layout = html.Div(children=[
                     placeholder = 'Select a State'
                 ),
                
-        ], className='six columns'),
-        html.Div([
-                dcc.Dropdown(
-                    id='stats-drop',
-                    options=[{'label': i, 'value': i} for i in varlist],
-                    placeholder = 'Select a variable'
-                ),
         ], className='six columns'),
         # right side
         html.Div([
