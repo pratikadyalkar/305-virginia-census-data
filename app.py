@@ -38,6 +38,7 @@ app.title=tabtitle
 app.layout = html.Div(children=[
     html.H1('Census Data 2017'),
     # Dropdowns
+    html.Div(id='my-output'),
     html.Div(children=[
         # left side
         html.Div([
@@ -47,7 +48,7 @@ app.layout = html.Div(children=[
                     options=[{'label': i, 'value': i} for i in states.state],
                     placeholder = 'Select a State'
                 ),
-               
+
         ], className='six columns'),
         html.Div([
             html.H6('Select census variable:'),
@@ -72,15 +73,15 @@ app.layout = html.Div(children=[
 )
 
 ############ Callbacks
-@app.callback(Output('va-map', 'figure'),
+@app.callback(Output('my-output', 'children'),
               [Input('state-drop','value')])
 def change_state(sel_state):
+    listofglobals = globals()
+    listofglobals['lat'] = states[(states['state']==sel_state)]['lat'].values[0]
+    listofglobals['long'] = states[(states['state']==sel_state)]['long'].values[0]
+    listofglobals['selectdf'] =  df.loc[df['State_x']==sel_state]
     print('a',lat,long,sel_state)
-    lat = states[(states['state']==sel_state)]['lat'].values[0]
-    long = states[(states['state']==sel_state)]['long'].values[0]
-    selectdf =  df.loc[df['State_x']==sel_state]
-    
-    return 
+
 
 @app.callback(Output('va-map', 'figure'),
               [Input('stats-drop', 'value')])
